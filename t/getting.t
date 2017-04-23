@@ -4,7 +4,7 @@ use v6.c;
 use Test;
 use lib "lib";
 
-plan 3;
+plan 6;
 
 use Config;
 
@@ -20,3 +20,7 @@ $config.read({
 ok $config.get("a") eq "a";
 ok $config.get("b.c") eq "c";
 ok $config.get("nonexistant") === Nil;
+
+ok $config.get(["a"]) eq "a";
+ok $config.get(["b", "c"]) eq "c";
+ok $config.get(["nonexistant"]) === Nil;

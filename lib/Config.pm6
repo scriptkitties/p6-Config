@@ -44,11 +44,24 @@ class Config is export
         return ::($parser).write($path, $!content);
     }
 
-    method get(Str $key, Any :$default = Nil)
+    multi method get(Str $key, Any $default = Nil)
     {
         my $index = $!content;
 
         for $key.split(".") -> $part {
+            return $default unless defined($index{$part});
+
+            $index = $index{$part};
+        }
+
+        $index;
+    }
+
+    multi method get(@keyparts, Any $default? = Nil)
+    {
+        my $index = $!content;
+
+        for @keyparts -> $part {
             return $default unless defined($index{$part});
 
             $index = $index{$part};
