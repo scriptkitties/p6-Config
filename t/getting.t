@@ -17,10 +17,12 @@ $config.read({
     }
 });
 
-ok $config.get("a") eq "a";
-ok $config.get("b.c") eq "c";
-ok $config.get("nonexistant") === Nil;
+ok $config.get("a") eq "a", "Get simple key";
+ok $config.get("b.c") eq "c", "Get nested key";
+ok $config.get("nonexistant") === Nil, "Get nonexistant key";
+ok $config.get("nonexistant", "test") === Nil, "Get nonexistant key with default";
 
-ok $config.get(["a"]) eq "a";
-ok $config.get(["b", "c"]) eq "c";
-ok $config.get(["nonexistant"]) === Nil;
+ok $config.get(["a"]) eq "a", "Get simple key by array";
+ok $config.get(["b", "c"]) eq "c", "Get nested key by array";
+ok $config.get(["nonexistant"]) === Nil, "Get nonexistant key by array";
+ok $config.get(["nonexistant"], "test") === Nil, "Get nonexistant key by array with default";

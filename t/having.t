@@ -17,5 +17,5 @@ $config.read({
     }
 });
 
-ok $config.has("a");
-ok $config.has("b.c");
+ok $config.has("a"), "Check existence of simple key";
+ok $config.has("b.c"), "Check existence of nested key";

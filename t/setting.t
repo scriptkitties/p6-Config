@@ -10,5 +10,5 @@ use Config;
 
 my $config = Config.new();
 
-ok $config.set("a", "test").get("a") eq "test";
-ok $config.set("b.c", "test").get("b.c") eq "test";
+ok $config.set("a", "test").get("a") eq "test", "Setting simple key";
+ok $config.set("b.c", "test").get("b.c") eq "test", "Setting nested key";
