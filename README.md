@@ -1,6 +1,8 @@
 # Config
 A perl 6 library for reading and writing configuration files.
 
+[![Build Status](https://travis-ci.org/scriptkitties/p6-Config.svg?branch=master)](https://travis-ci.org/scriptkitties/p6-Config)
+
 ## Installation
 This module can be installed using `zef`:
 
