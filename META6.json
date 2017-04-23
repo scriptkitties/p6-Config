@@ -1,0 +1,25 @@
+{
+    "perl": "6",
+    "name": "Config",
+    "version": "1.0.0",
+    "auth": "githu:scriptkitties",
+    "description": "Extensible library for reading and writing configuration files.",
+    "license": "GPL-3.0",
+    "depends": [
+
+    ],
+    "provides": {
+        "Config": "lib/Config.pm6"
+    },
+    "authors": [
+        "Patrick Spek <p.spek@tyil.work>"
+    ],
+    "tags": [
+        "config",
+        "configuration"
+    ],
+    "test-depends": [
+        "Test::META"
+    ],
+    "source-url": "https://github.com/scriptkitties/p6-Config.git"
+}
