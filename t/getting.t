@@ -4,7 +4,7 @@ use v6.c;
 use Test;
 use lib "lib";
 
-plan 6;
+plan 8;
 
 use Config;
 
@@ -20,9 +20,9 @@ $config.read({
 ok $config.get("a") eq "a", "Get simple key";
 ok $config.get("b.c") eq "c", "Get nested key";
 ok $config.get("nonexistant") === Nil, "Get nonexistant key";
-ok $config.get("nonexistant", "test") === Nil, "Get nonexistant key with default";
+ok $config.get("nonexistant", "test") === "test", "Get nonexistant key with default";
 
 ok $config.get(["a"]) eq "a", "Get simple key by array";
 ok $config.get(["b", "c"]) eq "c", "Get nested key by array";
 ok $config.get(["nonexistant"]) === Nil, "Get nonexistant key by array";
-ok $config.get(["nonexistant"], "test") === Nil, "Get nonexistant key by array with default";
+ok $config.get(["nonexistant"], "test") === "test", "Get nonexistant key by array with default";
