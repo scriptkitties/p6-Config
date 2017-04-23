@@ -19,7 +19,7 @@ class Config is export
         return self.load($!path);
     }
 
-    multi method read(Str $path, Str $parser? = "")
+    multi method read(Str $path, Str $parser = "")
     {
         Config::Exception::FileNotFoundException.new.throw() unless $path.IO.f;
 
@@ -36,7 +36,7 @@ class Config is export
         $!content = $hash;
     }
 
-    method write(Str $path, Str $parser? = "")
+    method write(Str $path, Str $parser = "")
     {
         $parser = self.get-parser($path, $parser);
 
@@ -57,7 +57,7 @@ class Config is export
         $index;
     }
 
-    multi method get(@keyparts, Any $default? = Nil)
+    multi method get(@keyparts, Any $default = Nil)
     {
         my $index = $!content;
 
@@ -97,7 +97,7 @@ class Config is export
         self;
     }
 
-    method get-parser(Str $path, Str $parser? = "")
+    method get-parser(Str $path, Str $parser = "")
     {
         if ($parser ne "") {
             return $parser;
