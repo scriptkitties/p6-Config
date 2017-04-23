@@ -48,10 +48,10 @@ class Config is export
     {
         my $index = $!content;
 
-        for $key.split(".") {
-            return $default unless defined($index{$_});
+        for $key.split(".") -> $part {
+            return $default unless defined($index{$part});
 
-            $index = $index{$_};
+            $index = $index{$part};
         }
 
         $index;
@@ -60,10 +60,10 @@ class Config is export
     method has(Str $key) {
         my $index = $!content;
 
-        for $key.split(".") {
-            return False unless defined($index{$_});
+        for $key.split(".") -> $part {
+            return False unless defined($index{$part});
 
-            $index = $index{$_};
+            $index = $index{$part};
         }
 
         True;
@@ -73,10 +73,10 @@ class Config is export
     {
         my $index := $!content;
 
-        for $key.split(".") {
-            $index{$_} = {} unless defined($index{$_});
+        for $key.split(".") -> $part {
+            $index{$part} = {} unless defined($index{$part});
 
-            $index := $index{$_};
+            $index := $index{$part};
         }
 
         $index = $value;
