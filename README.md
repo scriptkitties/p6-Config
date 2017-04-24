@@ -23,7 +23,7 @@ use Config;
 
 my $config = Config.new();
 
-# loading a simple configuration hash
+# load a simple configuration hash
 $config.read({
     keyOne => "value",
     keyTwo => {
@@ -31,14 +31,23 @@ $config.read({
     }
 });
 
-# loading a configuration files
+# load a configuration files
 $config.read("/etc/config.yaml");
 
-# retrieving a simple key
+# load a configuration file with a specific parser
+$config.read("/etc/config", "Config::Parser::ini");
+
+# retrieve a simple key
 $config.get("keyOne");
 
-# retrieving a nested key
+# retrieve a nested key
 $config.get("keyTwo.NestedKey");
+
+# write out the configuration file
+$config.write("/etc/config.yaml");
+
+# write out the configuration in another format
+$config.write("/etc/config.json", "Config::Parser::json");
 ```
 
 ### Available parsers
