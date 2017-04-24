@@ -2,7 +2,7 @@
 
 use v6.c;
 
-use Config::Exception::UnsupportedTypeException;
+use Config::Exception::MissingParserException;
 use Config::Exception::UnknownTypeException;
 use Config::Exception::FileNotFoundException;
 use Config::Type;
@@ -48,7 +48,9 @@ class Config is export
 
         my $type = self.get-parser-type($path);
 
-        Config::Exception::UnknownTypeException.new.throw() if $type eq Config::Type::unknown;
+        Config::Exception::UnknownTypeException.new(
+            type => $type
+        ).throw() if $type eq Config::Type::unknown;
 
         "Config::Parser::" ~ $type;
     }
@@ -91,12 +93,24 @@ class Config is export
 
     multi method read(Str $path, Str $parser = "")
     {
-        Config::Exception::FileNotFoundException.new.throw() unless $path.IO.f;
+        Config::Exception::FileNotFoundException.new(
+            path => $path
+        ).throw() unless $path.IO.f;
 
         $!parser = self.get-parser($path, $parser);
 
-        require ::($!parser);
-        $!content = ::($!parser).read($path);
+        try {
+            CATCH {
+                when X::CompUnit::UnsatisfiedDependency {
+                    Config::Exception::MissingParserException.new(
+                        parser => $parser
+                    ).throw();
+                }
+            }
+
+            require ::($!parser);
+            $!content = ::($!parser).read($path);
+        }
 
         return True;
     }
