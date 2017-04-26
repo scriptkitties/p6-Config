@@ -16,6 +16,13 @@ class Config is export
     has $!path;
     has $!parser;
 
+    method clear()
+    {
+        $!content = {};
+        $!path = "";
+        $!parser = "";
+    }
+
     multi method get(Str $key, Any $default = Nil)
     {
         my $index = $!content;
