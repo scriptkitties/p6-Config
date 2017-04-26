@@ -34,16 +34,16 @@ class Config is export
     #| key, use a . to descent a level.
     multi method get(Str $key, Any $default = Nil)
     {
-        self.get($key.split("."), $default);
+        self.get($key.split(".").list, $default);
     }
 
-    #| Get a value from the config object using an array
+    #| Get a value from the config object using a list
     #| to indicate the nested key to get.
-    multi method get(Array $keyparts, Any $default = Nil)
+    multi method get(List $keyparts, Any $default = Nil)
     {
         my $index = $!content;
 
-        for $keyparts -> $part {
+        for $keyparts.list -> $part {
             return $default unless defined($index{$part});
 
             $index = $index{$part};
@@ -91,20 +91,22 @@ class Config is export
 
     #| Check wether a given key exists.
     multi method has(Str $key) {
-        self.has($key.split("."));
+        self.has($key.split(".").list);
     }
 
-    #| Check wether a given key exists using an array to supply
+    #| Check wether a given key exists using a list to supply
     #| the nested key to check.
-    multi method has(Array $keyparts)
+    multi method has(List $keyparts)
     {
         my $index = $!content;
 
-        for $keyparts -> $part {
+        for $keyparts.list -> $part {
             return False unless defined($index{$part});
 
             $index = $index{$part};
         }
+
+        defined($index);
     }
 
     #| Reload the configuration. Requires the configuration to
@@ -146,11 +148,11 @@ class Config is export
         return True;
     }
 
-    #| Read an array of paths. Will fail on the first file that
+    #| Read a list of paths. Will fail on the first file that
     #| fails to load for whatever reason.
-    multi method read(Array $paths, Str $parser = "")
+    multi method read(List $paths, Str $parser = "")
     {
-        for $paths -> $path {
+        for $paths.list -> $path {
             self.read($path, $parser);
         }
 
@@ -168,14 +170,14 @@ class Config is export
     #| Set a single key to a given value;
     multi method set(Str $key, Any $value)
     {
-        self.set($key.split("."), $value);
+        self.set($key.split(".").list, $value);
     }
 
-    multi method set(Array $keyparts, Any $value)
+    multi method set(List $keyparts, Any $value)
     {
         my $index := $!content;
 
-        for $keyparts -> $part {
+        for $keyparts.list -> $part {
             $index{$part} = {} unless defined($index{$part});
 
             $index := $index{$part};

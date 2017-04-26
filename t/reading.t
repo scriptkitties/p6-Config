@@ -29,7 +29,7 @@ $config.read({
     "b" => {
         "d" => "another"
     }
-})
+});
 
 is-deeply $config.get(), {
     "a" =>
