@@ -63,7 +63,7 @@ class Config is export
         my $type = self.get-parser-type($path);
 
         Config::Exception::UnknownTypeException.new(
-            type => $type
+            file => $path
         ).throw() if $type eq Config::Type::unknown;
 
         "Config::Parser::" ~ $type;
