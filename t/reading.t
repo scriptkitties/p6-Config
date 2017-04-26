@@ -15,7 +15,7 @@ throws-like { $config.read("t/test-stub") }, Config::Exception::UnknownTypeExcep
 throws-like { $config.read("t/test-stub", "Config::Parser:NoSuchParserForTest") }, Config::Exception::MissingParserException, "Using non-existing parser";
 
 my $hash = {
-    "a" =>
+    "a" => "a",
     "b" => {
         "c" => "test"
     }
@@ -32,7 +32,7 @@ $config.read({
 });
 
 is-deeply $config.get(), {
-    "a" =>
+    "a" => "a",
     "b" => {
         "c" => "test",
         "d" => "another"
