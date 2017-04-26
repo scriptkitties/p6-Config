@@ -13,8 +13,8 @@ use Config::Parser;
 class Config is export
 {
     has Hash $!content = {};
-    has Str $!path;
-    has Str $!parser;
+    has Str $!path = "";
+    has Str $!parser = "";
 
     #| Clear the config.
     method clear()
