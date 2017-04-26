@@ -24,6 +24,12 @@ class Config is export
         $!parser = "";
     }
 
+    #| Return the entire config hash.
+    multi method get()
+    {
+        return $!content;
+    }
+
     #| Get a value from the config object. To get a nested
     #| key, use a . to descent a level.
     multi method get(Str $key, Any $default = Nil)
