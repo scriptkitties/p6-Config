@@ -28,24 +28,16 @@ class Config is export
     #| key, use a . to descent a level.
     multi method get(Str $key, Any $default = Nil)
     {
-        my $index = $!content;
-
-        for $key.split(".") -> $part {
-            return $default unless defined($index{$part});
-
-            $index = $index{$part};
-        }
-
-        $index;
+        self.get($key.split("."), $default);
     }
 
     #| Get a value from the config object using an array
     #| to indicate the nested key to get.
-    multi method get(@keyparts, Any $default = Nil)
+    multi method get(Array $keyparts, Any $default = Nil)
     {
         my $index = $!content;
 
-        for @keyparts -> $part {
+        for $keyparts -> $part {
             return $default unless defined($index{$part});
 
             $index = $index{$part};
@@ -92,16 +84,21 @@ class Config is export
     }
 
     #| Check wether a given key exists.
-    method has(Str $key) {
+    multi method has(Str $key) {
+        self.has($key.split("."));
+    }
+
+    #| Check wether a given key exists using an array to supply
+    #| the nested key to check.
+    multi method has(Array $keyparts)
+    {
         my $index = $!content;
 
-        for $key.split(".") -> $part {
+        for $keyparts -> $part {
             return False unless defined($index{$part});
 
             $index = $index{$part};
         }
-
-        True;
     }
 
     #| Reload the configuration. Requires the configuration to
