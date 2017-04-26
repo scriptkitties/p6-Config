@@ -4,7 +4,7 @@ use v6.c;
 use Test;
 use lib "lib";
 
-plan 2;
+plan 4;
 
 use Config;
 
