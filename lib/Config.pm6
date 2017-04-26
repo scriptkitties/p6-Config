@@ -12,10 +12,11 @@ use Config::Parser;
 
 class Config is export
 {
-    has $!content = {};
-    has $!path;
-    has $!parser;
+    has Hash $!content = {};
+    has Str $!path;
+    has Str $!parser;
 
+    #| Clear the config.
     method clear()
     {
         $!content = {};
@@ -23,6 +24,8 @@ class Config is export
         $!parser = "";
     }
 
+    #| Get a value from the config object. To get a nested
+    #| key, use a . to descent a level.
     multi method get(Str $key, Any $default = Nil)
     {
         my $index = $!content;
@@ -36,6 +39,8 @@ class Config is export
         $index;
     }
 
+    #| Get a value from the config object using an array
+    #| to indicate the nested key to get.
     multi method get(@keyparts, Any $default = Nil)
     {
         my $index = $!content;
@@ -49,6 +54,8 @@ class Config is export
         $index;
     }
 
+    #| Get the name of the parser module to use for the
+    #| given path.
     method get-parser(Str $path, Str $parser = "")
     {
         if ($parser ne "") {
@@ -64,6 +71,7 @@ class Config is export
         "Config::Parser::" ~ $type;
     }
 
+    #| Get the type of parser required for the given path.
     method get-parser-type(Str $path)
     {
         given ($path) {
@@ -83,6 +91,7 @@ class Config is export
         return Config::Type::unknown;
     }
 
+    #| Check wether a given key exists.
     method has(Str $key) {
         my $index = $!content;
 
@@ -95,11 +104,20 @@ class Config is export
         True;
     }
 
+    #| Reload the configuration. Requires the configuration to
+    #| have been loaded from a file.
     multi method read()
     {
+        if ($!path eq "") {
+            return False;
+        }
+
         return self.load($!path);
     }
 
+    #| Load a configuration file from the given path. Optionally
+    #| set a parser module name to use. If not set, Config will
+    #| attempt to deduce the parser to use.
     multi method read(Str $path, Str $parser = "")
     {
         Config::Exception::FileNotFoundException.new(
@@ -119,24 +137,32 @@ class Config is export
 
             require ::($!parser);
 
-            $!content.merge(::($!parser).read($path));
+            self.read(::($!parser).read($path));
         }
 
         return True;
     }
 
+    #| Read an array of paths. Will fail on the first file that
+    #| fails to load for whatever reason.
     multi method read(Array $paths, Str $parser = "")
     {
         for $paths -> $path {
             self.read($path, $parser);
         }
+
+        return True;
     }
 
+    #| Read a plain Hash into the configuration.
     multi method read(Hash $hash)
     {
         $!content.merge($hash);
+
+        return True;
     }
 
+    #| Set a single key to a given value;
     method set(Str $key, Any $value)
     {
         my $index := $!content;
@@ -152,6 +178,9 @@ class Config is export
         self;
     }
 
+    #| Write the current configuration to the given path. If
+    #| no parser is given, it tries to use the parser that
+    #| was used when loading the configuration.
     method write(Str $path, Str $parser = "")
     {
         $parser = self.get-parser($path, $parser);
