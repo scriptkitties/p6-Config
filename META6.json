@@ -6,7 +6,7 @@
     "description": "Extensible library for reading and writing configuration files.",
     "license": "GPL-3.0",
     "depends": [
-
+        "Hash::Merge"
     ],
     "provides": {
         "Config": "lib/Config.pm6",

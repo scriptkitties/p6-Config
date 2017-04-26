@@ -2,6 +2,8 @@
 
 use v6.c;
 
+use Hash::Merge;
+
 use Config::Exception::MissingParserException;
 use Config::Exception::UnknownTypeException;
 use Config::Exception::FileNotFoundException;
@@ -109,15 +111,23 @@ class Config is export
             }
 
             require ::($!parser);
-            $!content = ::($!parser).read($path);
+
+            $!content.merge(::($!parser).read($path));
         }
 
         return True;
     }
 
+    multi method read(Array $paths, Str $parser = "")
+    {
+        for $paths -> $path {
+            self.read($path, $parser);
+        }
+    }
+
     multi method read(Hash $hash)
     {
-        $!content = $hash;
+        $!content.merge($hash);
     }
 
     method set(Str $key, Any $value)
