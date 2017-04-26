@@ -160,11 +160,16 @@ class Config is export
     }
 
     #| Set a single key to a given value;
-    method set(Str $key, Any $value)
+    multi method set(Str $key, Any $value)
+    {
+        self.set($key.split("."), $value);
+    }
+
+    multi method set(Array $keyparts, Any $value)
     {
         my $index := $!content;
 
-        for $key.split(".") -> $part {
+        for $keyparts -> $part {
             $index{$part} = {} unless defined($index{$part});
 
             $index := $index{$part};
