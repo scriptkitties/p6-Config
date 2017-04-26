@@ -60,6 +60,10 @@ class Config is export
             return $parser;
         }
 
+        if ($!parser ne "") {
+            return $!parser;
+        }
+
         my $type = self.get-parser-type($path);
 
         Config::Exception::UnknownTypeException.new(
@@ -117,7 +121,7 @@ class Config is export
             return False;
         }
 
-        return self.load($!path);
+        return self.read($!path);
     }
 
     #| Load a configuration file from the given path. Optionally
@@ -150,9 +154,14 @@ class Config is export
 
     #| Read a list of paths. Will fail on the first file that
     #| fails to load for whatever reason.
-    multi method read(List $paths, Str $parser = "")
-    {
+    multi method read(
+        List $paths,
+        Str $parser = "",
+        Bool :$skip-not-found = False
+    ) {
         for $paths.list -> $path {
+            next if $skip-not-found && !$path.IO.f;
+
             self.read($path, $parser);
         }
 
@@ -193,9 +202,9 @@ class Config is export
     #| was used when loading the configuration.
     method write(Str $path, Str $parser = "")
     {
-        $parser = self.get-parser($path, $parser);
+        my $chosen-parser = self.get-parser($path, $parser);
 
-        require ::($parser);
-        return ::($parser).write($path, $!content);
+        require ::($chosen-parser);
+        return ::($chosen-parser).write($path, $!content);
     }
 }
