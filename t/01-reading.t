@@ -4,7 +4,7 @@ use v6.c;
 use Test;
 use lib "lib";
 
-plan 4;
+plan 5;
 
 use Config;
 
@@ -37,3 +37,14 @@ is-deeply $config.get(), {
         "d" => "another"
     }
 }, "Correctly merges new hash into existing config";
+
+subtest {
+    plan 3;
+
+    # Use the NULL parser to mock the parser
+    my $parser = "Config::Parser::NULL";
+
+    is $config.read(("t/files/config", "t/files/config.yaml"), $parser, skip-not-found => True), True, "All paths exist";
+    is $config.read(("t/files/config", "t/files/none", "t/files/config.yaml"), $parser, skip-not-found => True), True, "At least one path exists";
+    is $config.read(("t/files/none", "t/files/none.yaml"), $parser, skip-not-found => True), False, "No paths exist";
+}, "Read with a List of paths";
