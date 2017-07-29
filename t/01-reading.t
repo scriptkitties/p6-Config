@@ -8,7 +8,7 @@ plan 5;
 
 use Config;
 
-my $config = Config.new();
+my Config $config = Config.new();
 
 throws-like { $config.read("t/files/none") }, Config::Exception::FileNotFoundException, "Reading nonexisting file";
 throws-like { $config.read("t/files/config", "Config::Parser:NoSuchParserForTest") }, Config::Exception::MissingParserException, "Using non-existing parser";
