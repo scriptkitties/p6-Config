@@ -8,7 +8,7 @@ use Config::Exception::MissingParserException;
 use Config::Exception::FileNotFoundException;
 use Config::Parser;
 
-class Config is export
+class Config is Associative is export
 {
     has Hash $!content = {};
     has Str $!path = "";
@@ -208,5 +208,30 @@ class Config is export
 
         require ::($chosen-parser);
         return ::($chosen-parser).write($path, $!content);
+    }
+
+    multi method AT-KEY(::?CLASS:D: $key)
+    {
+        $self.get($key);
+    }
+
+    multi method EXISTS-KEY(::?CLASS:D: $key)
+    {
+        $self.has($key);
+    }
+
+    multi method DELETE-KEY(::?CLASS:D: $key)
+    {
+        $self.unset($key);
+    }
+
+    multi method ASSIGN-KEY(::?CLASS:D: $key, $new)
+    {
+        $self.set($key, $new);
+    }
+
+    multi method BIND-KEY(::?CLASS:D: $key, \new)
+    {
+        $self.set($key, new);
     }
 }
