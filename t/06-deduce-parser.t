@@ -5,6 +5,9 @@ use Test;
 use lib "lib";
 
 use Config;
+use Config::Parser::yaml;
+use Config::Parser::toml;
+use Config::Parser::NULL;
 
 plan 4;
 
@@ -32,8 +35,8 @@ subtest "Check parser type for edge-cases defined in get-parser-type" => {
 subtest "Returns correct fully qualified module name" => {
     plan 4;
 
-    is $config.get-parser("config"), "Config::Parser::", "Empty parser on unknown type";
-    is $config.get-parser("config.yaml"), "Config::Parser::yaml", "Extension when available";
-    is $config.get-parser("config.TOML"), "Config::Parser::toml", "Lowercased extension";
-    is $config.get-parser("config", "Config::Parser::NULL"), "Config::Parser::NULL", "Given string";
+    is $config.get-parser("config"), Any, "Empty parser on unknown type";
+    is $config.get-parser("config.yaml"), Config::Parser::yaml, "Extension when available";
+    is $config.get-parser("config.TOML"), Config::Parser::toml, "Lowercased extension";
+    is $config.get-parser("config", "Config::Parser::NULL"), Config::Parser::NULL, "Given string";
 };

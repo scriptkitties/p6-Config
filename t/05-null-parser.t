@@ -7,7 +7,7 @@ use lib "lib";
 use Config;
 use Config::Parser::NULL;
 
-plan 3;
+plan 4;
 
 ::("Config::Parser::NULL").set-config({
     "a" => "a",
@@ -18,7 +18,8 @@ plan 3;
 
 my Config $config = Config.new();
 
-ok $config.read("t/files/config", "Config::Parser::NULL"), "Attempt to read a file with Config::Parser::NULL";
+ok $config.read("t/files/config", "Config::Parser::NULL"), "Attempt to read a file with string Config::Parser::NULL";
+ok $config.read("t/files/config", Config::Parser::NULL), "Attempt to read a file with Config::Parser::NULL";
 
 is-deeply $config.get(), {
     "a" => "a",

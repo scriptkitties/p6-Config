@@ -7,6 +7,8 @@ use lib "lib";
 plan 6;
 
 use Config;
+use Config::Exception::FileNotFoundException;
+use Config::Exception::MissingParserException;
 
 my Config $config = Config.new();
 my Str $null-parser = "Config::Parser::NULL";

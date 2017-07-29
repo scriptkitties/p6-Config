@@ -12,7 +12,7 @@ class Config is Associative is export
 {
     has Hash $!content = {};
     has Str $!path = "";
-    has Str $!parser = "";
+    has Config::Parser $!parser;
 
     #| Clear the config.
     method clear()
@@ -57,17 +57,41 @@ class Config is Associative is export
         $index;
     }
 
+    multi method get-parser(Str:D $, Any:_ $ where { $!parser ~~ Config::Parser } --> Any:U)
+    {
+        $!parser
+    }
+
     #| Get the name of the parser module to use for the
     #| given path.
-    method get-parser(Str $path, Str $parser = "" --> Str)
+    multi method get-parser(Str:D $, Str:D $parser where { $parser ne "" } --> Any:U)
     {
-        return $parser if $parser ne "";
-        return $!parser if $!parser ne "";
-        say $!parser;
+        self!spawn-parser-from-name($parser)
+    }
 
-        my $type = self.get-parser-type($path);
+    multi method get-parser(Str:D $, Config::Parser $parser --> Any:U) {
+        $parser
+    }
 
-        "Config::Parser::" ~ $type;
+    multi method get-parser(Str:D $path, Any:_ $ where { !$_.defined || !$_  } = False --> Any:U)
+    {
+        my $class-name = self.get-parser-type($path);
+        return Any if $class-name eq "";
+
+        my $parser-name = "Config::Parser::" ~ $class-name;
+
+        self!spawn-parser-from-name($parser-name);
+    }
+
+    method !spawn-parser-from-name($parser-name) {
+        try require ::($parser-name);
+        if ::($parser-name) ~~ Failure {
+            Config::Exception::MissingParserException.new(
+                parser => $parser-name
+            ).throw;
+        }
+
+        return ::($parser-name)
     }
 
     #| Get the type of parser required for the given path.
@@ -126,7 +150,7 @@ class Config is Associative is export
     #| attempt to deduce the parser to use.
     multi method read(
         Str $path,
-        Str $parser = "",
+        Any $parser = False,
         Bool :$skip-not-found = False
     ) {
         Config::Exception::FileNotFoundException.new(
@@ -134,20 +158,7 @@ class Config is Associative is export
         ).throw() unless ($path.IO.f || $skip-not-found);
 
         $!parser = self.get-parser($path, $parser);
-
-        try {
-            CATCH {
-                when X::CompUnit::UnsatisfiedDependency {
-                    Config::Exception::MissingParserException.new(
-                        parser => $!parser
-                    ).throw();
-                }
-            }
-
-            require ::($!parser);
-
-            self.read(::($!parser).read($path));
-        }
+        $.read($!parser.read($path));
 
         return True;
     }
@@ -157,7 +168,7 @@ class Config is Associative is export
     #| False.
     multi method read(
         List $paths,
-        Str $parser = "",
+        Any $parser = False,
         Bool :$skip-not-found = False
     ) {
         my Bool $read = False;
@@ -205,12 +216,11 @@ class Config is Associative is export
     #| Write the current configuration to the given path. If
     #| no parser is given, it tries to use the parser that
     #| was used when loading the configuration.
-    method write(Str $path, Str $parser = "")
+    method write(Str $path, Any $parser = False)
     {
         my $chosen-parser = self.get-parser($path, $parser);
 
-        require ::($chosen-parser);
-        return ::($chosen-parser).write($path, $!content);
+        return $chosen-parser.write($path, $!content);
     }
 
     multi method AT-KEY(::?CLASS:D: $key)

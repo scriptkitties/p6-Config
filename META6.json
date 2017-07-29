@@ -24,7 +24,9 @@
         "configuration"
     ],
     "test-depends": [
-        "Test::META"
+        "Test::META",
+        "Config::Parser::yaml",
+        "Config::Parser::toml"
     ],
     "source-url": "https://github.com/scriptkitties/p6-Config.git"
 }
