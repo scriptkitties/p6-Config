@@ -21,10 +21,10 @@ please.
 ```perl6
 use Config;
 
-my Config %config = Config.new();
+my Config $config = Config.new();
 
 # Load a simple configuration hash
-%config.read({
+$config.read({
     keyOne => "value",
     keyTwo => {
         NestedKey => "other value"
@@ -32,25 +32,25 @@ my Config %config = Config.new();
 });
 
 # Load a configuration files
-%config.read("/etc/config.yaml");
+$config.read("/etc/config.yaml");
 
 # Load a configuration file with a specific parser
-%config.read("/etc/config", "Config::Parser::ini");
+$config.read("/etc/config", "Config::Parser::ini");
 
 # Retrieve a simple key
-%config.get("keyOne");
+$config.get("keyOne");
 
 # As of v1.2.0, `Config` support associative indexing:
-%config<keyOne>;
+$config<keyOne>;
 
 # Retrieve a nested key
-%config.get("keyTwo.NestedKey");
+$config.get("keyTwo.NestedKey");
 
 # Write out the configuration file
-%config.write("/etc/config.yaml");
+$config.write("/etc/config.yaml");
 
 # Write out the configuration in another format
-%config.write("/etc/config.json", "Config::Parser::json");
+$config.write("/etc/config.json", "Config::Parser::json");
 ```
 
 ### Available parsers
