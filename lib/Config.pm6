@@ -212,26 +212,26 @@ class Config is Associative is export
 
     multi method AT-KEY(::?CLASS:D: $key)
     {
-        $self.get($key);
+        self.get($key);
     }
 
     multi method EXISTS-KEY(::?CLASS:D: $key)
     {
-        $self.has($key);
+        self.has($key);
     }
 
     multi method DELETE-KEY(::?CLASS:D: $key)
     {
-        $self.unset($key);
+        self.unset($key);
     }
 
     multi method ASSIGN-KEY(::?CLASS:D: $key, $new)
     {
-        $self.set($key, $new);
+        self.set($key, $new);
     }
 
     multi method BIND-KEY(::?CLASS:D: $key, \new)
     {
-        $self.set($key, new);
+        self.set($key, new);
     }
 }
