@@ -28,6 +28,13 @@ class Config is export
         return $!content;
     }
 
+    #| Fallback method in case the key is Nil. Will always return the default
+    #| value.
+    multi method get(Nil $key, Any $default = Nil)
+    {
+        $default;
+    }
+
     #| Get a value from the config object. To get a nested
     #| key, use a . to descent a level.
     multi method get(Str $key, Any $default = Nil)
