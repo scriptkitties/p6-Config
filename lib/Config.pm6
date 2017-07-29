@@ -142,20 +142,25 @@ class Config is export
         return True;
     }
 
-    #| Read a list of paths. Will fail on the first file that
-    #| fails to load for whatever reason.
+    #| Read a list of paths. Will fail on the first file that fails to load for
+    #| whatever reason. If no files could be loaded, the method will return
+    #| False.
     multi method read(
         List $paths,
         Str $parser = "",
         Bool :$skip-not-found = False
     ) {
+        my bool $read = False;
+
         for $paths.list -> $path {
             next if $skip-not-found && !$path.IO.f;
 
             self.read($path, $parser);
+
+            $read = True;
         }
 
-        return True;
+        return $read;
     }
 
     #| Read a plain Hash into the configuration.
