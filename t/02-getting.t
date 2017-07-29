@@ -4,7 +4,7 @@ use v6.c;
 use Test;
 use lib "lib";
 
-plan 11;
+plan 13;
 
 use Config;
 
@@ -30,3 +30,6 @@ ok $config.get(["nonexistant"], "test") === "test", "Get nonexistant key by arra
 ok $config.<a> eq "a", "Get simple key via associative index";
 ok $config.<b.c> eq "c", "Get nested key via associative index";
 ok $config.<nonexistant> === Nil, "Get nonexistant key via associative index";
+
+is $config.get(Nil), Nil, "Attempt to .get with Nil key";
+is $config.get(Nil, "test"), "test", "Attempt .get with Nil key with default";
