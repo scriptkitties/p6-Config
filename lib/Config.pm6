@@ -157,7 +157,7 @@ class Config is Associative is export
         Str $parser = "",
         Bool :$skip-not-found = False
     ) {
-        my bool $read = False;
+        my Bool $read = False;
 
         for $paths.list -> $path {
             next if $skip-not-found && !$path.IO.f;
