@@ -124,11 +124,14 @@ class Config is Associative is export
     #| Load a configuration file from the given path. Optionally
     #| set a parser module name to use. If not set, Config will
     #| attempt to deduce the parser to use.
-    multi method read(Str $path, Str $parser = "")
-    {
+    multi method read(
+        Str $path,
+        Str $parser = "",
+        Bool :$skip-not-found = False
+    ) {
         Config::Exception::FileNotFoundException.new(
             path => $path
-        ).throw() unless $path.IO.f;
+        ).throw() unless ($path.IO.f || $skip-not-found);
 
         $!parser = self.get-parser($path, $parser);
 
