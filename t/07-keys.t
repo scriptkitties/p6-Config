@@ -6,6 +6,8 @@ use Config::Parser::NULL;
 use Config;
 use Test;
 
+plan 1;
+
 my Config $c .= new.read: %(
 	"a" => False,
 	"b" => False,
