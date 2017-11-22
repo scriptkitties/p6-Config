@@ -110,6 +110,7 @@ class Config is Associative is export
         defined($index);
     }
 
+    #| Return a sorted list of all available keys in the current Config.
     method keys()
     {
         my @keys;
@@ -119,20 +120,6 @@ class Config is Associative is export
         }
 
         @keys.sort;
-    }
-
-    submethod extract-keys($key)
-    {
-        my $value = self.get($key);
-        return $key if $value !~~ Iterable;
-
-        my @keys;
-
-        for $value.keys -> $nested-key {
-            @keys.append: self.extract-keys("{$key}.{$nested-key}");
-        }
-
-        return @keys;
     }
 
     #| Reload the configuration. Requires the configuration to
@@ -261,5 +248,19 @@ class Config is Associative is export
     multi method BIND-KEY(::?CLASS:D: $key, \new)
     {
         self.set($key, new);
+    }
+
+    submethod extract-keys($key)
+    {
+        my $value = self.get($key);
+        return $key if $value !~~ Iterable;
+
+        my @keys;
+
+        for $value.keys -> $nested-key {
+            @keys.append: self.extract-keys("{$key}.{$nested-key}");
+        }
+
+        return @keys;
     }
 }
