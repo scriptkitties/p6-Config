@@ -7,15 +7,15 @@ env:
     - VERSION=2018.03-01
     - VERSION=2018.02.1-01 TAG=v2018.02.1
 
-  os:
-    - linux
+os:
+  - linux
 
-  before_install:
-    - cd $(mktemp -d)
-    - wget "https://github.com/nxadm/rakudo-pkg/releases/download/${TAG:-v${VERSION}}/rakudo-pkg-Ubuntu14.04_${VERSION}_amd64.deb" && sudo dpkg -i *.deb
-    - cd ${TRAVIS_BUILD_DIR}
+before_install:
+  - cd $(mktemp -d)
+  - wget "https://github.com/nxadm/rakudo-pkg/releases/download/${TAG:-v${VERSION}}/rakudo-pkg-Ubuntu14.04_${VERSION}_amd64.deb" && sudo dpkg -i *.deb
+  - cd ${TRAVIS_BUILD_DIR}
 
-  install:
-    - zef install --deps-only .
+install:
+  - zef install --deps-only .
 
 script: AUTHOR_TESTING=1 prove -v -e "perl6 -Ilib" t/
