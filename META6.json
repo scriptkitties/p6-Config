@@ -18,7 +18,9 @@
     "Config::Parser": "lib/Config/Parser.pm6",
     "Config::Parser::NULL": "lib/Config/Parser/NULL.pm6"
   },
-  "resources": [ ],
+  "resources": [
+    
+  ],
   "source-url": "https://github.com/scriptkitties/p6-Config.git",
   "tags": [
     "config",
@@ -27,5 +29,5 @@
   "test-depends": [
     "Test::META"
   ],
-  "version": "1.3.1"
+  "version": "1.3.2"
 }
