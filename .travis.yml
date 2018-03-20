@@ -13,7 +13,7 @@ env:
   before_install:
     - cd $(mktemp -d)
     - wget "https://github.com/nxadm/rakudo-pkg/releases/download/${TAG:-v${VERSION}}/rakudo-pkg-Ubuntu14.04_${VERSION}_amd64.deb" && sudo dpkg -i *.deb
-    - cd -
+    - cd ${TRAVIS_BUILD_DIR}
 
   install:
     - zef install --deps-only .
