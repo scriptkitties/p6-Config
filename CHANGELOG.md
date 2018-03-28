@@ -6,6 +6,12 @@ and this project adheres to [Semantic
 Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [UNRELEASED]
+### Added
+- `api` key to META6.json
+
+### Changed
+- Update dependency to `Hash::Merge` to use `api` and `version` adverbs
+
 ### Removed
 - Lingering say statement in get-parser, breaking tests for Rakudo Star users ([GitHub#4](https://github.com/scriptkitties/p6-Config/issues/4))
 - Useless `use lib "lib"` statements from tests
