@@ -63,8 +63,9 @@ installed yourself.
 
 The following parsers are available:
 
-- [`Config::Parser::yaml`](https://github.com/scriptkitties/p6-Config-Parser-yaml)
+- [`Config::Parser::json`](https://github.com/robertlemmen/perl6-config-json)
 - [`Config::Parser::toml`](https://github.com/scriptkitties/p6-Config-Parser-toml)
+- [`Config::Parser::yaml`](https://github.com/scriptkitties/p6-Config-Parser-yaml)
 
 ### Writing your own parser
 If you want to make your own parser, simply make a new class which extends the
