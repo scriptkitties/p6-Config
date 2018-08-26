@@ -10,8 +10,8 @@ use Hash::Merge;
 unit class Config is Associative;
 
 has Hash $!content = {};
-has Str $!path = "";
-has Str $!parser = "";
+has Str $.path = "";
+has Str $.parser = "";
 
 #| Clear the config.
 method clear()
@@ -19,6 +19,12 @@ method clear()
     $!content = {};
     $!path = "";
     $!parser = "";
+}
+
+method clone (
+    --> Config
+) {
+    Config.new(:$!path, :$!parser).read: $!content;
 }
 
 #| Return the entire config hash.
