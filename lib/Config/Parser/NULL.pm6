@@ -12,9 +12,14 @@ class Config::Parser::NULL is Config::Parser
     my %mock-config = ();
 
     #| Return the mock config, skipping the file entirely.
-    method read(Str $path --> Hash)
+    multi method read(Str $path --> Hash)
     {
         %mock-config;
+    }
+
+    multi method read(IO::Path $path --> Hash)
+    {
+       %mock-config;
     }
 
     #| Set the mock config to return on read.
@@ -24,7 +29,12 @@ class Config::Parser::NULL is Config::Parser
     }
 
     #| Return True, as if writing succeeded.
-    method write(Str $path, Hash $config --> Bool)
+    multi method write(Str $path, Hash $config --> Bool)
+    {
+        True;
+    }
+
+    multi method write(IO::Path $path, Hash $config --> Bool)
     {
         True;
     }
