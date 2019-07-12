@@ -64,7 +64,7 @@ multi method get(List $keyparts, Any $default = Nil)
 
 #| Get the name of the parser module to use for the
 #| given path.
-method get-parser(Str $path, Str $parser = "" --> Str)
+multi method get-parser(Str $path, Str $parser = "" --> Str)
 {
     return $parser if $parser ne "";
     return $!parser if $!parser ne "";
@@ -74,8 +74,13 @@ method get-parser(Str $path, Str $parser = "" --> Str)
     "Config::Parser::" ~ $type;
 }
 
+multi method get-parser(IO::Path $path, Str $parser = "" --> Str)
+{
+    samewith($path.absolute, $parser)
+}
+
 #| Get the type of parser required for the given path.
-method get-parser-type(Str $path --> Str)
+multi method get-parser-type(Str $path --> Str)
 {
     given ($path) {
         when .ends-with(".yml") { return "yaml"; };
@@ -92,6 +97,11 @@ method get-parser-type(Str $path --> Str)
     }
 
     return "";
+}
+
+multi method get-parser-type(IO::Path $path --> Str)
+{
+    samewith($path.absolute)
 }
 
 #| Check wether a given key exists.
@@ -145,9 +155,21 @@ multi method read (
     Bool :$skip-not-found = False,
     --> Config
 ) {
-    Config::Exception::FileNotFoundException.new(
-        path => $path
-    ).throw() unless ($path.IO.f || $skip-not-found);
+    samewith($path.IO, $parser, :$skip-not-found)
+}
+
+#| Load a configuration file from the given path. Optionally
+#| set a parser module name to use. If not set, Config will
+#| attempt to deduce the parser to use.
+multi method read (
+    IO::Path $path,
+    Str $parser = "",
+    Bool :$skip-not-found = False,
+    --> Config
+) {
+    if (!$path.f && !$skip-not-found) {
+        Config::Exception::FileNotFoundException.new(path => $path.absolute).throw();
+    }
 
     $!parser = self.get-parser($path, $parser);
 
@@ -177,12 +199,10 @@ multi method read (
     --> Config
 ) {
     for $paths.list -> $path {
-        next if $skip-not-found && !$path.IO.f;
-
-        self.read($path, $parser);
+        samewith($path, $parser, :$skip-not-found);
     }
 
-    return self;
+    self;
 }
 
 #| Read a plain Hash into the configuration.
@@ -240,7 +260,12 @@ multi method unset(@parts)
 #| Write the current configuration to the given path. If
 #| no parser is given, it tries to use the parser that
 #| was used when loading the configuration.
-method write(Str $path, Str $parser = "")
+multi method write(IO::Path $path, Str $parser = "")
+{
+    samewith($path.absolute, $parser)
+}
+
+multi method write(Str $path, Str $parser = "")
 {
     my $chosen-parser = self.get-parser($path, $parser);
 
