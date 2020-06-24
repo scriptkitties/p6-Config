@@ -1,9 +1,9 @@
 # Config
-A perl 6 library for reading and writing configuration files.
 
-[![Build Status](https://travis-ci.org/scriptkitties/p6-Config.svg?branch=master)](https://travis-ci.org/scriptkitties/p6-Config)
+Extensible configuration class for the Raku programming language.
 
 ## Installation
+
 This module can be installed using `zef`:
 
 ```
@@ -54,6 +54,7 @@ $config.write("/etc/config.json", "Config::Parser::json");
 ```
 
 ### Available parsers
+
 Because there's so many ways to structure your configuration files, the parsers
 for these are their own modules. This allows for easy implementing new parsers,
 or providing a custom parser for your project's configuration file.
@@ -63,11 +64,14 @@ installed yourself.
 
 The following parsers are available:
 
-- [`Config::Parser::json`](https://github.com/robertlemmen/perl6-config-json)
+- json:
+  - [`Config::Parser::json`](https://github.com/arjancwidlak/p6-Config-Parser-json)
+  - [`Config::Parser::json`](https://github.com/robertlemmen/perl6-config-json)
 - [`Config::Parser::toml`](https://github.com/scriptkitties/p6-Config-Parser-toml)
 - [`Config::Parser::yaml`](https://github.com/scriptkitties/p6-Config-Parser-yaml)
 
 ### Writing your own parser
+
 If you want to make your own parser, simply make a new class which extends the
 `Config::Parser` class, and implements the `read` and `write` methods. The
 `read` method *must* return a `Hash`. The `write` method *must* return a
@@ -75,6 +79,7 @@ If you want to make your own parser, simply make a new class which extends the
 `Exception`s to indicate the kind of failure is recommended.
 
 ## License
+
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
