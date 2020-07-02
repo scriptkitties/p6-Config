@@ -78,6 +78,12 @@ If you want to make your own parser, simply make a new class which extends the
 `Bool`, `True` when writing was successful, `False` if not. Throwing
 `Exception`s to indicate the kind of failure is recommended.
 
+## Contributing
+
+If you want to contribute to `Config`, you can do so by mailing your patches to
+`~tyil/raku-devel@lists.sr.ht`. Any questions or other forms of feedback are
+welcome too!
+
 ## License
 
 This program is free software: you can redistribute it and/or modify it under
