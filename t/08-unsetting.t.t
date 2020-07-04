@@ -3,7 +3,7 @@
 use v6.c;
 use Test;
 
-plan 8;
+plan 4;
 
 use Config;
 
@@ -15,11 +15,6 @@ $config.read: %(
 		d => "e",
 	),
 );
-
-ok $config<a>:exists, "'a' exists";
-ok $config<a>:delete, "'a' gets deleted";
-nok $config<a>:exists, "'a' no longer exists";
-ok $config<c>:exists, "'c' remains untouched";
 
 ok $config.has("c.d"), "'c.d' exists";
 ok $config.unset("c.d"), "'c.d' gets deleted";

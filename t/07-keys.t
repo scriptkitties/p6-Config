@@ -19,6 +19,6 @@ my Config $c .= new.read: %(
 
 my @keys = < a b c.a c.b >;
 
-is $c.keys, @keys, ".keys returns a list of all keys";
+is $c.keys.sort, @keys, ".keys returns a list of all keys";
 
 # vim: ft=perl6 noet

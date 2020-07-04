@@ -8,7 +8,7 @@ plan 4;
 
 use Config;
 
-my $config = Config.new();
+my $config = Config.new;
 
 is $config.set("a", "test").get("a"), "test", "Setting simple key";
 is $config.set("b.c", "test").get("b.c"), "test", "Setting nested key";

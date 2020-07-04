@@ -1,26 +1,29 @@
 {
-  "api": "2",
+  "api": "3",
   "auth": "github:scriptkitties",
   "authors": [
     "Patrick Spek <p.spek@tyil.work>"
   ],
   "depends": [
-    "Hash::Merge:api<1>:version<1.0.0+>"
+    "Hash::Merge:version<1.0.1>",
+    "IO::Path::XDG:version<0.2.0>",
+    "Log:auth<cpan:TYIL>:version<0.3.0>"
   ],
   "description": "Extensible library for reading and writing configuration files.",
-  "license": "GPL-3.0",
+  "license": "LGPL-3.0-only",
   "name": "Config",
-  "perl": "6.c",
+  "perl": "6.d",
   "provides": {
     "Config": "lib/Config.pm6",
-    "Config::Exception::FileNotFoundException": "lib/Config/Exception/FileNotFoundException.pm6",
-    "Config::Exception::MissingParserException": "lib/Config/Exception/MissingParserException.pm6",
-    "Config::Exception::UnimplementedMethodException": "lib/Config/Exception/UnimplementedMethodException.pm6",
     "Config::Parser": "lib/Config/Parser.pm6",
-    "Config::Parser::NULL": "lib/Config/Parser/NULL.pm6"
+    "Config::Parser::NULL": "lib/Config/Parser/NULL.pm6",
+    "X::Config::AbstractParser": "lib/X/Config/AbstractParser.rakumod",
+    "X::Config::FileNoExtension": "lib/X/Config/FileNoExtension.rakumod",
+    "X::Config::FileNotFound": "lib/X/Config/FileNotFound.rakumod",
+    "X::Config::MissingParser": "lib/X/Config/MissingParser.rakumod",
+    "X::Config::NotSupported": "lib/X/Config/NotSupported.rakumod"
   },
   "resources": [
-    
   ],
   "source-url": "https://github.com/scriptkitties/p6-Config.git",
   "tags": [
@@ -30,5 +33,5 @@
   "test-depends": [
     "Test::META"
   ],
-  "version": "2.1.0"
+  "version": "3.0.0"
 }
