@@ -1,4 +1,4 @@
-#! /usr/bin/env perl6
+#! /usr/bin/env raku
 
 use v6;
 
@@ -21,4 +21,4 @@ my @keys = < a b c.a c.b >;
 
 is $c.keys.sort, @keys, ".keys returns a list of all keys";
 
-# vim: ft=perl6 noet
+# vim: ft=raku noet

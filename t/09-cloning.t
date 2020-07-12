@@ -1,4 +1,4 @@
-#! /usr/bin/env perl6
+#! /usr/bin/env raku
 
 use v6.c;
 
@@ -18,4 +18,4 @@ my Config $b = $a.clone;
 is-deeply $a.get, $b.get, "B contains the same data as A";
 isnt $a, $b, "A and B are not the same object";
 
-# vim: ft=perl6 noet
+# vim: ft=raku noet

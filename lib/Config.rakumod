@@ -536,4 +536,4 @@ with this program.  If not, see http://www.gnu.org/licenses/.
 
 =end pod
 
-# vim: ft=perl6 sw=8 ts=8 noet
+# vim: ft=raku sw=8 ts=8 noet

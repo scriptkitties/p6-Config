@@ -18,7 +18,7 @@ object without reading/writing a file, no parser is needed.
 Include the `Config` module in your script, instantiate it and use it as you
 please.
 
-```perl6
+```raku
 use Config;
 
 my Config $config = Config.new();
