@@ -52,8 +52,8 @@ method new (
 ) {
 	%data ||= %template;
 
-	%data = merge-hash(%data, self!read-from-env(%template, :$name)) if $from-env && $name;
 	%data = merge-hash(%data, self!read-from-xdg-files(:$name)) if $from-xdg && $name;
+	%data = merge-hash(%data, self!read-from-env(%template, :$name)) if $from-env && $name;
 
 	self.bless(
 		:%template,
