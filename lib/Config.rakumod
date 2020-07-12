@@ -370,6 +370,7 @@ method !read-from-env (
 			# Shell-style variable names.
 			my $var = "$name$key"
 				.subst('.', '_', :g)
+				.subst('-', '_', :g)
 				.uc
 				;
 
