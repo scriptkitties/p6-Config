@@ -177,6 +177,17 @@ multi method read (
 	self.read(self!read-from-file($path, $parser));
 }
 
+#| Update the Config values from a given file.
+multi method read (
+	Str:D $path,
+
+	Config::Parser:U $parser? is copy,
+
+	--> Config:D
+) {
+	self.read($path.IO, $parser)
+}
+
 #| Update the Config values from a list of files.
 multi method read (
 	#| A list of paths to configuration files to load.
@@ -193,7 +204,7 @@ multi method read (
 ) {
 	my %data = %!data;
 
-	for @paths -> $path {
+	for @paths.map(*.IO) -> $path {
 		next if !$path.f && $skip-not-found;
 		X::Config::FileNotFound.new(:$path).throw if !$path.f;
 
