@@ -1,6 +1,6 @@
 {
   "api": "3",
-  "auth": "github:scriptkitties",
+  "auth": "cpan:TYIL",
   "authors": [
     "Patrick Spek <p.spek@tyil.work>"
   ],
@@ -14,9 +14,9 @@
   "name": "Config",
   "perl": "6.d",
   "provides": {
-    "Config": "lib/Config.pm6",
-    "Config::Parser": "lib/Config/Parser.pm6",
-    "Config::Parser::NULL": "lib/Config/Parser/NULL.pm6",
+    "Config": "lib/Config.rakumod",
+    "Config::Parser": "lib/Config/Parser.rakumod",
+    "Config::Parser::NULL": "lib/Config/Parser/NULL.rakumod",
     "X::Config::AbstractParser": "lib/X/Config/AbstractParser.rakumod",
     "X::Config::FileNoExtension": "lib/X/Config/FileNoExtension.rakumod",
     "X::Config::FileNotFound": "lib/X/Config/FileNotFound.rakumod",
@@ -25,13 +25,13 @@
   },
   "resources": [
   ],
-  "source-url": "https://github.com/scriptkitties/p6-Config.git",
+  "source-url": "https://home.tyil.nl/git/raku/Config/",
   "tags": [
     "config",
     "configuration"
   ],
   "test-depends": [
-    "Test::META"
+    "Test"
   ],
   "version": "3.0.0"
 }
