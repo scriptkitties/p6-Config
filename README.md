@@ -15,42 +15,82 @@ Depending on the type of configuration file you want to work on, you will need a
 object without reading/writing a file, no parser is needed.
 
 ## Usage
-Include the `Config` module in your script, instantiate it and use it as you
-please.
+
+To start off, specify a *template* of your configuration. `Config` will check
+a couple of directories for a configuration file (based on the XDG base
+directory spec), and will also automatically try to see if there's any
+configuration specified in environment variables.
+
+To specify a template, pass it as an argument to `new`.
 
 ```raku
-use Config;
+my $config = Config.new({
+	keyOne => Str,
+	keyTwo => {
+		NestedKey => "default value",
+	},
+	keyThree => Int,
+}, :name<foobar>);
+```
 
-my Config $config = Config.new();
+Important to note here is the `name` attribute which is being set. This name
+is used to look up configuration files in default locations and the
+environment. For this particular example, it will check any directory specified
+in `$XDG_CONFIG_DIRS` for files matching `foobar.*` and `foobar/config.*`.
+Afterwards, it will check `$XDG_CONFIG_HOME` for the same files. If these
+variables are not set, it will just check `$HOME/.config` for those files.
 
+Additionally, the environment will be checked for `$FOOBAR_KEYONE`,
+`$FOOBAR_KEYTWO_NESTEDKEY`, and `$FOOBAR_KEYTHREE`. The former two will be cast
+to `Str` appropriately, with `$FOOBAR_KEYTHREE` being cast to an `Int`. This
+ensures that the values are of the correct type, even if they're pulled from a
+shell environment. This also works for `IO::Path`!
+
+*If you're using the Raku `Log` module, you can set `RAKU_LOG_LEVEL` to `7` to
+see which places it actually checks and reads for values.*
+
+You can also manually read configuration files or hashes of values.
+
+```raku
 # Load a simple configuration hash
-$config.read({
-    keyOne => "value",
+$config.=read({
+    keyOne => 'value',
     keyTwo => {
-        NestedKey => "other value"
+        NestedKey => 'other value'
     }
 });
 
 # Load a configuration files
-$config.read("/etc/config.yaml");
+$config.=read('/etc/config.yaml');
 
 # Load a configuration file with a specific parser
-$config.read("/etc/config", "Config::Parser::ini");
+$config.=read('/etc/config', Config::Parser::ini);
+```
 
-# Retrieve a simple key
-$config.get("keyOne");
+Do note the use of `.=` here. `Config` returns a new `Config` object if you
+change its values, it is an immutable object. The `.=` operator provided by
+Raku is a shorthand for `$config = $config.read(...)`.
 
-# As of v1.2.0, `Config` support associative indexing:
+To read values from the `Config` object, you can use the `get` method, or treat
+it as a `Hash`.
+
+```raku
+# Retrieve a value
+$config.get('keyOne');
+
+# Same as above, but treating it as a Hash
 $config<keyOne>;
 
-# Retrieve a nested key
-$config.get("keyTwo.NestedKey");
+# Retrieve a value by nested key
+$config.get('keyTwo.NestedKey');
+```
 
-# Write out the configuration file
-$config.write("/etc/config.yaml");
+The `Config` object can also write it's current configuration back to a file.
+You must specify a particular `Config::Parser` implementation as well.
 
-# Write out the configuration in another format
-$config.write("/etc/config.json", "Config::Parser::json");
+```raku
+# Write out the configuration using the json parser
+$config.write($*HOME.add('.config/foobar/config.json', Config::Parser::json);
 ```
 
 ### Available parsers
@@ -87,9 +127,8 @@ welcome too!
 ## License
 
 This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.
+the terms of the GNU Lesser General Public License version 3, as published by
+the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY
 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
