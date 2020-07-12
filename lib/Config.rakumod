@@ -3,6 +3,7 @@
 use v6.d;
 
 use Hash::Merge;
+use IO::Glob;
 use IO::Path::XDG;
 use Log;
 
@@ -430,9 +431,10 @@ method !read-from-xdg-files (
 	my @files = xdg-config-dirs()
 		.reverse
 		.map(sub ($dir) {
-			(« $name "$name/config" » X~ < .json .toml .yaml >).map({
-				$dir.add($_)
-			}).Slip
+			(
+				glob("$dir/$name.*").dir('/').map(*.IO).Slip,
+				glob("$dir/$name/config.*").dir('/').map(*.IO).Slip;
+			).Slip
 		})
 		;
 

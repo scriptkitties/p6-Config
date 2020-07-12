@@ -7,7 +7,8 @@
   "depends": [
     "Hash::Merge:version<1.0.1>",
     "IO::Path::XDG:version<0.2.0>",
-    "Log:auth<cpan:TYIL>:version<0.3.0>"
+    "Log:auth<cpan:TYIL>:version<0.3.0>",
+    "IO::Glob"
   ],
   "description": "Extensible library for reading and writing configuration files.",
   "license": "LGPL-3.0-only",
