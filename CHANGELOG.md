@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic
 Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [3.0.0] - 2020-07-02
+## [3.0.0] - 2020-07-12
 
 `Config` has been rebuilt from the ground up. This is a relatively old
 project of mine, which I used to get into Raku. I've learned many new things
