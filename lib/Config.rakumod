@@ -149,7 +149,7 @@ multi method read (
 	Config.new(
 		%!template,
 		:$!name,
-		data => merge-hash(%!data, %data),
+		data => merge-hash(%!data.clone, %data),
 		:!read-from-env,
 		:!read-from-xdg,
 	)

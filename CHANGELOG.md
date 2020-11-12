@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic
 Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- `.read` now uses `%!data.clone`, instead of `%!data`. This should fix an
+  issue where the `Hash` used is shared between the objects, resulting in
+  hard-to-debug errors.
+
 ## [3.0.0] - 2020-07-12
 
 `Config` has been rebuilt from the ground up. This is a relatively old
