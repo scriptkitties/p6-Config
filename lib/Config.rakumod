@@ -529,7 +529,7 @@ method EXISTS-KEY (::?CLASS:D: $key)
 =begin pod
 
 =NAME    Config
-=VERSION 3.0.0
+=VERSION 3.0.1
 =AUTHOR  Patrick Spek <p.spek@tyil.work>
 
 =begin LICENSE

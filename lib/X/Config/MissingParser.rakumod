@@ -14,7 +14,7 @@ method message
 =begin pod
 
 =NAME    X::Config::MissingParser
-=VERSION 3.0.0
+=VERSION 3.0.1
 =AUTHOR  Patrick Spek <p.spek@tyil.work>
 
 =begin LICENSE
