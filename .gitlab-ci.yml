@@ -4,9 +4,9 @@ Config:
   image: rakudo-star
   before_script:
     - zef install . --deps-only --test-depends --/test
-  script: AUTHOR_TESTING=1 prove -v -e "perl6 -Ilib" t
+  script: AUTHOR_TESTING=1 prove -l
   artifacts:
-    name: "perl6-Config"
+    name: "raku-Config"
     paths:
       - META6.json
       - bin
@@ -20,4 +20,4 @@ test:
   image: rakudo-star
   before_script:
     - zef install . --deps-only --test-depends --/test
-  script: AUTHOR_TESTING=1 prove -v -e "perl6 -Ilib" t
+  script: AUTHOR_TESTING=1 prove -lv
