@@ -9,7 +9,7 @@ use Config;
 
 my $config = Config.new;
 
-$config.read: %(
+$config.=read: %(
 	a => "b",
 	c => %(
 		d => "e",

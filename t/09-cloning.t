@@ -8,7 +8,7 @@ use Config;
 
 plan 2;
 
-my Config $a .= new.read: %(
+my $a = Config.new.read: %(
 	foo => "bar",
 	baz => 42,
 );

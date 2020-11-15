@@ -11,7 +11,7 @@ use Config::Parser::NULL;
 my Config $config = Config.new;
 my Config::Parser $null-parser = Config::Parser::NULL;
 
-throws-like { $config.read('t/files/none'.IO) }, X::Config::FileNotFound, 'Reading nonexisting file';
+throws-like { $config.=read('t/files/none'.IO) }, X::Config::FileNotFound, 'Reading nonexisting file';
 
 my %hash = %(
     "a" => "a",
@@ -20,7 +20,7 @@ my %hash = %(
     ),
 );
 
-$config.read: %hash;
+$config.=read: %hash;
 
 is-deeply $config.get, %hash, 'Correctly sets hash';
 

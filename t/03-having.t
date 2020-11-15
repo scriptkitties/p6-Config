@@ -7,9 +7,9 @@ plan 4;
 
 use Config;
 
-my Config $config = Config.new();
+my Config $config = Config.new;
 
-$config.read({
+$config.=read({
     a => "a",
     b => {
         c => "c"

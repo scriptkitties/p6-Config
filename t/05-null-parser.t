@@ -17,7 +17,7 @@ Config::Parser::NULL.set-config({
 
 my Config $config = Config.new;
 
-ok $config.read('t/files/config'.IO, Config::Parser::NULL), "Attempt to read a file with Config::Parser::NULL";
+ok $config.=read('t/files/config'.IO, Config::Parser::NULL), "Attempt to read a file with Config::Parser::NULL";
 
 is-deeply $config.get, {
     "a" => "a",
