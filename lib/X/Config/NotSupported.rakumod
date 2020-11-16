@@ -15,7 +15,7 @@ method message
 =begin pod
 
 =NAME    X::Config::NotSupported
-=VERSION 3.0.1
+=VERSION 3.0.3
 =AUTHOR  Patrick Spek <p.spek@tyil.work>
 
 =begin LICENSE
