@@ -12,7 +12,7 @@ method message
 =begin pod
 
 =NAME    X::Config::AbstractParser
-=VERSION 3.0.3
+=VERSION 3.0.4
 =AUTHOR  Patrick Spek <p.spek@tyil.work>
 
 =begin LICENSE
