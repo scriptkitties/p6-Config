@@ -146,7 +146,7 @@ multi method read (
 
 	--> Config:D
 ) {
-	Config.new(
+	self.new(
 		%!template,
 		:$!name,
 		data => merge-hash(%!data.clone, %data),
@@ -252,7 +252,7 @@ multi method set (
 
 	$index = $value;
 
-	Config.new(
+	self.new(
 		%!template,
 		:$!name,
 		:%data,
@@ -287,7 +287,7 @@ multi method unset (
 
 	$index{@parts[*-1]}:delete;
 
-	Config.new(
+	self.new(
 		%!template,
 		:$!name,
 		:%data,
